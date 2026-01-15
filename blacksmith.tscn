@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://mdyxw4i53ahq"]
+
+[ext_resource type="Script" uid="uid://baukor82l7me2" path="res://blacksmith.gd" id="1_e28hf"]
+[ext_resource type="Script" uid="uid://wncyyxgvmv1i" path="res://hammer.gd" id="1_v6gen"]
+[ext_resource type="Texture2D" uid="uid://8ukm4fq4jm61" path="res://icon.svg" id="2_e28hf"]
+
+[node name="Blacksmith" type="Node2D"]
+script = ExtResource("1_e28hf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Hammer" type="Node2D" parent="."]
+position = Vector2(-256, -192)
+script = ExtResource("1_v6gen")
+
+[node name="sprHammer" type="Sprite2D" parent="Hammer"]
+texture = ExtResource("2_e28hf")
+
+[node name="sprAnvil" type="Node2D" parent="."]
+position = Vector2(-256, 32)
+
+[node name="anvTop" type="ColorRect" parent="sprAnvil"]
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 32.0
+color = Color(0.65012825, 0.6501283, 0.65012825, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="anvBase" type="ColorRect" parent="sprAnvil"]
+offset_left = -64.0
+offset_top = 32.0
+offset_right = 64.0
+offset_bottom = 128.0
+color = Color(0.65012825, 0.6501283, 0.65012825, 1)
+
+[node name="lblTime" type="Label" parent="."]
+offset_left = 320.0
+offset_top = -256.0
+offset_right = 504.0
+offset_bottom = -208.0
+
+[node name="lblBPM" type="Label" parent="."]
+offset_left = 320.0
+offset_top = -304.0
+offset_right = 488.0
+offset_bottom = -256.0
+
+[node name="SongTimer" type="Timer" parent="."]
+
+[node name="lblFeedback" type="Label" parent="."]
+offset_left = -320.0
+offset_top = 208.0
+offset_right = -192.0
+offset_bottom = 256.0
+
+[node name="lblTarget" type="Label" parent="."]
+offset_left = -320.0
+offset_top = 160.0
+offset_right = -192.0
+offset_bottom = 208.0
