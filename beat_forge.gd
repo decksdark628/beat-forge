@@ -2,9 +2,12 @@ extends Node2D
 
 const FIRST_SONG_PATH:String = "res://song_data/song_00-120bpm.csv"
 const V_TARGET_ANIM_LATENCY:float = 1.0
+const BEAT_THRESHOLD:float = 0.3
 
-@onready var jukebox: Node = $Jukebox
+@onready var song_importer: Node = $Jukebox/SongImporter
+@onready var song_player: AudioStreamPlayer = $Jukebox/SongPlayer
 @onready var clock: Node = $GameClock
+@onready var hammer_anim_player: AnimationPlayer = $Hammer/AnimationPlayer
 #const SONG_LENGTH:float = 26.48
 
 #@onready var hammer_animation_player: AnimationPlayer = $Hammer/AnimationPlayer
@@ -17,22 +20,26 @@ var beat_length:float
 @export var v_target:PackedScene
 var input_locked:bool = true
 var player_hit:float = 0.0
+var last_tick:int = 0
 
 var target_times:PackedFloat32Array = []
 var v_target_spawn_times:PackedFloat32Array = []
 var v_target_spawn_tracker:Array = [] # TODO: consider if its worth using a PackedByteArray for 8 booleans per entry
 var current_target:float
+var next_target:Target
 var n:int = 0
 
 
 func _ready() -> void:
 	# IMPORT SONG
-	jukebox.import_song(FIRST_SONG_PATH)
-	song = jukebox.song
+	song_importer.import_song(FIRST_SONG_PATH)
+	song = song_importer.song
 	bpm = song.bpm
 	
+	# FOR SHOWCASE OF EXPORT FUNCTIONALITY ONLY, DONT UNCOMMENT
+	#song_importer.export_song(song)
+	
 	# GENERATE GAME DATA
-	current_target = target_times[n]
 	target_times.resize(song.targets.size())
 	for i in range(0, song.targets.size()):
 		target_times[i] = song.targets[i].tick * bpm
@@ -43,11 +50,12 @@ func _ready() -> void:
 
 	v_target_spawn_tracker.resize(target_times.size())
 	v_target_spawn_tracker.fill(false)
+	current_target = target_times[n]
 
 	# START
-	#song_player.play()
-	#input_locked = false
-
+	clock.init_timer(bpm)
+	song_player.play()
+	input_locked = false
 
 #func _process(delta: float) -> void:
 	#time_elapsed = timer.wait_time - timer.time_left
@@ -68,11 +76,22 @@ func _ready() -> void:
 	#target_node.position = Vector2(379, -13)
 	#add_child(target_node)
 	#print("spawn: " + str(time_elapsed))
-	#
-#func _on_hammer_key_pressed(key:int) -> void:
-	#player_hit = time_elapsed
-	#hammer_animation_player.play("hit")
-#
-#
-#func _on_timer_timeout() -> void:
-	#current_beat += 1
+
+func _compare(hit:float, target:float) -> bool:
+	var difference:float = absf(hit - target)
+	if difference > BEAT_THRESHOLD:
+		return false
+	return true
+
+func _on_hammer_key_pressed(key:int):
+	player_hit = clock.get_tick_count_in_ms() + clock.get_time_since_last_tick()
+	#if key != song.targets[n].key:
+		# print("miss")
+	if _compare(player_hit, target_times[n]):
+		hammer_anim_player.play("hit")
+	else:
+		print("miss")
+
+func _on_game_clock_tick(current_tick:int) -> void:
+	if current_target.tick == current_tick + 1:
+		pass

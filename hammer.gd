@@ -4,10 +4,10 @@ extends Node2D
 
 signal key_pressed
 
-#func _input(event: InputEvent):
-	#if(!game.input_locked):
-		#if(event.is_action_pressed("rhythm_game_key_1")):
-			#key_pressed.emit(1)
+func _input(event: InputEvent):
+	if(!game.input_locked):
+		if(event.is_action_pressed("ui_accept")):
+			key_pressed.emit(1)
 		#if(event.is_action_pressed("rhythm_game_key_2")):
 			#key_pressed.emit(2)
 		#if(event.is_action_pressed("rhythm_game_key_3")):

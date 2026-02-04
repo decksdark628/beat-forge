@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://mdyxw4i53ahq"]
+[gd_scene load_steps=17 format=4 uid="uid://mdyxw4i53ahq"]
 
 [ext_resource type="Script" uid="uid://cxf1syc5s8sln" path="res://beat_forge.gd" id="1_tpaib"]
 [ext_resource type="Texture2D" uid="uid://cbiee2hoy3io" path="res://sprites/forge_bg.png" id="2_6d80v"]
@@ -9,13 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dlvv5t4xqj76o" path="res://sfx/hit.wav" id="6_8vckl"]
 [ext_resource type="Texture2D" uid="uid://ct1utql1tedjo" path="res://sprites/Anvil.png" id="6_c7p1g"]
 [ext_resource type="Script" uid="uid://0s1em4wolnk4" path="res://game_clock.gd" id="8_ggl6f"]
-[ext_resource type="AudioStream" uid="uid://cphyp822rxaus" path="res://tick.wav" id="8_i28h8"]
-[ext_resource type="AudioStream" uid="uid://dlnftmp6ib3ce" path="res://music/demo_00.wav" id="10_8vckl"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_2e507"]
-diffuse_texture = ExtResource("4_ggl6f")
-normal_texture = ExtResource("5_xwgc8")
-texture_filter = 1
+[ext_resource type="AudioStream" uid="uid://dlnftmp6ib3ce" path="res://music/song_00.wav" id="10_8vckl"]
 
 [sub_resource type="Animation" id="Animation_t56mv"]
 length = 0.001
@@ -46,7 +40,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnvilSound:playing")
+tracks/2/path = NodePath("HammerSound:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -86,7 +80,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AnvilSound:playing")
+tracks/2/path = NodePath("HammerSound:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -131,10 +125,22 @@ _data = {
 &"start_positioning": SubResource("Animation_g1fya")
 }
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_2e507"]
+diffuse_texture = ExtResource("4_ggl6f")
+normal_texture = ExtResource("5_xwgc8")
+texture_filter = 1
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_8vckl"]
+data = PackedByteArray("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ARCJKCHCJCIEoIcIkIkoIQSghwiQiSghDCJCJKCHCJQMIkIkoIcIlAOESgUESgSUA4RKBQRKBJQEocIlBDhEoQShwiUEOEShDCJRJJRKHCIMIlEklEocIgUSiESgUESgBRKIRKBQRKAII8lEIkoFEggjyUQiSgUSCPJRCJKBRKEI8lEIkoFEoQiUQiSgUSgSCJRCJKBRKBIFBDhEkkkkhAUEOESSSSSEBJQ4RJJJJIQElDhEkkkkhASUCSSSEEECBJQJJJIQQQIEkhAkkkhBBASSECSSSEEEAQxJCHBQQJIBDEkIcFBAkgSSQgggQgggBJJCCCBCCCAIEkkkIIIIBAgSSSQggggEAJJJJJJJBJIAkkkkkkkEkgSSCSSSSSSSBJIJJJJJJJIEgkkkkkEkkgSCSSSSQSSSBJJJJIJIJBIEkkkkgkgkEgCASCQQSCQSAIBIJBBIJBIDAkEgkEEEEgMCQSCQQQQSAIJBIJAJBIIAgkEgkAkEggQQSCRgSCCQBBBIJGBIIJAEgkAkEgkEggSCQCQSCQSCAJBBBIIJBIIAkEEEggkEggQQQSCQSCCQBBBBIJBIIJAEgkYYYEEgkASCRhhgQSCQBIwwIJBIIJAEjDAgkEggkASCQQQQSCQSBIJBBBBIJBIAkEEEgkEgkACQQQSCQSCQBBIJBIJAIBIEEgkEgkAgEgAQCAQACAQCABAIBAAIBAIAEAgAgEAgEAAQCACAQCAQAIBOAIIBAIAAgE4AggEAgAQACAQCAQCABAAIBAIBAIAEYUEAgEAgEARhQQCAQCAQAxwBBAIBAIADHAEEAgEAgAAQCAQCAQCAABAIBAIBAIAAgEAgEAgEAgCAQCAQCAQCAGFAIBAIBAIAYUAgEAgEAgAQKCAQCAQCABAoIBAIBAIAEAgAgEAgEAAQCACAQCAQAIBAIBPOAIAAgEAgE84AgACAQCAQCATzAIBAIBAIBPMIAEAgEAgEAggAQCAQCAQCABABAIBAIBAAEAEAgEAgEACAQCAQKCAQAIBAIBAoIBAAgAgEAgEAgACACAQCAQCABAoIBFBAIoIECggEUEAiggARQQCAQAQCABFBAIBABAICggEUEAgEAgKCARQQCAQCABAIABAIooIAEAgAEAiiggARQCKCARQQABFAIoIBFBAAigAgEUUUUACKACARRRRQBAIoIBFBAIoEAiggEUEAigCACARQQCKCAIAIBFBAIoIAEUEAgEAgEAARQQCAQCAQAIBAAIBFFFEAgEAAgEUUUQRQQCKCACARBFBAIoIAIBEEUUEAigAgEQRRQQCKACARBFFFFFFFFBAEUUUUUUUUEACKCARQQCKCAIoIBFBAIoIAEAEAiiiggAAQAQCKKKCABFBAIoIBFBAEUEAiggEUEACAQCAQCAQCAIBAIBAIBAIAUAEUUUUUUQBQARRRRRRRBFFBAIoIBFAEUUEAiggEUAQCcACKKKKKBAJwAIoooooCggUAEUUUUQKCBQARRRRRBFFFFFFFFFEEUUUUUUUUUQRRRRQQCKCABFFFFBAIoIAEUEAiggEUAgRQQCKCARQCAoooooooooICiiiiiiiiggARQQCKCARQABFBAIoIBFAEAiggEUEAgAQCKCARQQCABAIBAIBAIBAEAgEAgEAgEACBQARRRRRRAIFABFFFFFEEUUUUUUUUUQRRRRRRRRRRBFFFFFFFFFEEUUUUUUUUUQRRRQQCKCARBFFFBAIoIBEEAiiiiiiiigQCKKKKKKKKAoopwoAAAAACiinCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwoooooooAAHCiiiiiigKKKKKKKKKKAooooooooooCiiiiiiiiigKKKKKKKKKKAooooooooooCiiiiiiiiigKKKKKKKKKKAooooooooooCiiiiiiiiigKKKKKKKKKKAooooooooooCiiiiiiiiigKKKKKKKKKKAooooooooooCiiiiiiiiigKKKKKKKKKKAooooopxxxwCiiiiinHHHAccccccccccBxxxxxxxxxwHHHHHHHHHHAccccccccccBxxxxxxxxxwHHHHHHHHHHAsaIBAIBAIBCxogEAgEAgEACAQCAQCAQAAIBAIBAIBAAgEAgEAgEAgCAQCAQCAQCABAIBAIBAIBAEAgEAgEAgEEUUUUUUUUUQRRRRRRRRRRBFFFFFFFFFEEUUUUUUUUUQRRRRRRAAAABFFFFFEAAAA=")
+format = 3
+stereo = true
+
 [node name="BeatForge" type="Node2D"]
 script = ExtResource("1_tpaib")
 
 [node name="Jukebox" type="Node" parent="."]
+
+[node name="SongImporter" type="Node" parent="Jukebox"]
 script = ExtResource("2_ggl6f")
 
 [node name="SongPlayer" type="AudioStreamPlayer" parent="Jukebox"]
@@ -154,6 +160,7 @@ scale = Vector2(4, 4)
 texture = ExtResource("2_6d80v")
 
 [node name="highlightBar" type="ColorRect" parent="."]
+visible = false
 offset_left = 352.0
 offset_top = -368.0
 offset_right = 407.0
@@ -163,6 +170,15 @@ color = Color(0.6313726, 1, 1, 0.19607843)
 [node name="Hammer" type="Node2D" parent="."]
 position = Vector2(490, -60)
 script = ExtResource("3_8vckl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hammer"]
+libraries = {
+&"": SubResource("AnimationLibrary_nil5l")
+}
+autoplay = "start_positioning"
+
+[node name="HammerSound" type="AudioStreamPlayer" parent="Hammer"]
+stream = ExtResource("6_8vckl")
 
 [node name="Visuals" type="Node2D" parent="Hammer"]
 position = Vector2(75, 0)
@@ -175,15 +191,6 @@ scale = Vector2(5, 5)
 texture = SubResource("CanvasTexture_2e507")
 offset = Vector2(-22.5, -1.5)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hammer"]
-libraries = {
-&"": SubResource("AnimationLibrary_nil5l")
-}
-autoplay = "start_positioning"
-
-[node name="AnvilSound" type="AudioStreamPlayer" parent="Hammer"]
-stream = ExtResource("6_8vckl")
-
 [node name="sprAnvil" type="Node2D" parent="."]
 position = Vector2(405, 110)
 
@@ -192,35 +199,12 @@ texture_filter = 1
 scale = Vector2(5.5, 5.5)
 texture = ExtResource("6_c7p1g")
 
-[node name="lblTime" type="Label" parent="."]
-offset_left = 320.0
-offset_top = -256.0
-offset_right = 504.0
-offset_bottom = -208.0
-
-[node name="lblBPM" type="Label" parent="."]
-offset_left = 320.0
-offset_top = -304.0
-offset_right = 488.0
-offset_bottom = -256.0
-
-[node name="lblFeedback" type="Label" parent="."]
-offset_left = -320.0
-offset_top = 208.0
-offset_right = -192.0
-offset_bottom = 256.0
-
-[node name="lblTarget" type="Label" parent="."]
-offset_left = -320.0
-offset_top = 160.0
-offset_right = -192.0
-offset_bottom = 208.0
-
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_i28h8")
+stream = SubResource("AudioStreamWAV_8vckl")
 volume_db = -5.0
 bus = &"SFX"
 
+[connection signal="tick" from="GameClock" to="." method="_on_game_clock_tick"]
 [connection signal="key_pressed" from="Hammer" to="." method="_on_hammer_key_pressed"]

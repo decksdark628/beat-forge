@@ -1,17 +1,17 @@
 extends Node
 
-const EXPORT_PATH:String = "res://song_data/"
+const EXPORT_PATH:String = "res://song_data/exports/"
 const CSV_HEADER:String = "key,tick"
 
 var song:Song
 
 func import_song(path:String):
 	if(FileAccess.file_exists(path)):
-		var file = FileAccess.open("path", FileAccess.READ)
-		_extract_meta(file)
+		var file = FileAccess.open(path, FileAccess.READ)
+		_extract_meta(path)
 		_extract_content(file)
 		file.close()
-		print("[ ✔️ ] Cancion importada: " + song._to_string())
+		print("[ ✔️ ] Cancion importada:" + song._to_string())
 
 func export_song(s:Song):
 	if s == null:
@@ -26,10 +26,12 @@ func export_song(s:Song):
 	file.close()
 	print("[ ✔️ ] Cancion exportada en: " + output_path)
 
-func _extract_meta(file:FileAccess):
-	var meta:PackedStringArray = file.get_basename().split("-")
+func _extract_meta(path:String):
+	var filename = path.get_file().trim_suffix(".csv")
+	var meta:PackedStringArray = filename.split("-")
+	song = Song.new()
 	song.name = meta[0]
-	song.bpm = int(meta[1].substr(3))
+	song.bpm = int(meta[1].substr(0,3))
 
 func _extract_content(file:FileAccess):
 	while file.get_position() < file.get_length():

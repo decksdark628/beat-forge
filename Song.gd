@@ -10,8 +10,9 @@ func add_target(exp_key:int, tick:int):
 	targets.append(nuevo)
 
 func _to_string() -> String:
-	var temp:String = "SONG: %s - BPM: %d\n" % [name, bpm]
+	var temp:String = "\n----------\nSONG: %s\nBPM: %d\n" % [name, bpm]
+	temp += "TARGETS:"
 	for x in targets:
 		temp += "\n" + x._to_string()
-	
+	temp += "\n----------\n"
 	return temp
