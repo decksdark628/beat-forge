@@ -1,14 +1,14 @@
 [gd_scene load_steps=17 format=4 uid="uid://mdyxw4i53ahq"]
 
-[ext_resource type="Script" uid="uid://cxf1syc5s8sln" path="res://beat_forge.gd" id="1_tpaib"]
+[ext_resource type="Script" uid="uid://cxf1syc5s8sln" path="res://scripts/beat_forge.gd" id="1_tpaib"]
 [ext_resource type="Texture2D" uid="uid://cbiee2hoy3io" path="res://sprites/forge_bg.png" id="2_6d80v"]
-[ext_resource type="Script" uid="uid://vibvs5youif5" path="res://song_importer.gd" id="2_ggl6f"]
-[ext_resource type="Script" uid="uid://wncyyxgvmv1i" path="res://hammer.gd" id="3_8vckl"]
+[ext_resource type="Script" uid="uid://vibvs5youif5" path="res://scripts/song_importer.gd" id="2_ggl6f"]
+[ext_resource type="Script" uid="uid://wncyyxgvmv1i" path="res://scripts/hammer.gd" id="3_8vckl"]
 [ext_resource type="Texture2D" uid="uid://b1f7guysyc6p4" path="res://sprites/hammer.png" id="4_ggl6f"]
 [ext_resource type="Texture2D" uid="uid://dssoqi6t56cvx" path="res://sprites/hammer_normal_map.png" id="5_xwgc8"]
 [ext_resource type="AudioStream" uid="uid://dlvv5t4xqj76o" path="res://sfx/hit.wav" id="6_8vckl"]
 [ext_resource type="Texture2D" uid="uid://ct1utql1tedjo" path="res://sprites/Anvil.png" id="6_c7p1g"]
-[ext_resource type="Script" uid="uid://0s1em4wolnk4" path="res://game_clock.gd" id="8_ggl6f"]
+[ext_resource type="Script" uid="uid://0s1em4wolnk4" path="res://scripts/game_clock.gd" id="8_ggl6f"]
 [ext_resource type="AudioStream" uid="uid://dlnftmp6ib3ce" path="res://music/song_00.wav" id="10_8vckl"]
 
 [sub_resource type="Animation" id="Animation_t56mv"]
