@@ -1,0 +1,135 @@
+[gd_scene load_steps=13 format=3 uid="uid://bpenp487bl1jx"]
+
+[ext_resource type="Texture2D" uid="uid://byhfy0b3o56fj" path="res://sprites/metall_ball.png" id="1_tous8"]
+[ext_resource type="Script" uid="uid://blh4h1oklwsdj" path="res://hot_metal.gd" id="1_u5fno"]
+[ext_resource type="FontFile" uid="uid://fcn6tv4ivlog" path="res://fonts/Minecraft.ttf" id="2_o2fbt"]
+
+[sub_resource type="Animation" id="Animation_u5fno"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_o2fbt"]
+resource_name = "appear"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-1100, 0), Vector2(0, 0), Vector2(1100, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"mid_point"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7r5r7"]
+_data = {
+&"RESET": SubResource("Animation_u5fno"),
+&"appear": SubResource("Animation_o2fbt")
+}
+
+[sub_resource type="Gradient" id="Gradient_u5fno"]
+offsets = PackedFloat32Array(0.32, 0.44)
+colors = PackedColorArray(0.827451, 0.15686275, 0.101960786, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7r5r7"]
+gradient = SubResource("Gradient_u5fno")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_o2fbt"]
+offsets = PackedFloat32Array(0.06, 0.17333333)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u5fno"]
+gradient = SubResource("Gradient_o2fbt")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_7r5r7"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.14, 0.48)
+colors = PackedColorArray(1, 0.8627451, 0.38039216, 1, 1, 0.4884417, 0.07007223, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5u1vi"]
+gradient = SubResource("Gradient_7r5r7")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="HotMetal" type="Node2D"]
+script = ExtResource("1_u5fno")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7r5r7")
+}
+autoplay = "appear"
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("1_tous8")
+
+[node name="RedGlow" type="PointLight2D" parent="Visual"]
+visible = false
+scale = Vector2(1.5, 1.5)
+energy = 2.0
+texture = SubResource("GradientTexture2D_7r5r7")
+
+[node name="WhiteGlow" type="PointLight2D" parent="Visual"]
+visible = false
+scale = Vector2(3.25, 3.25)
+color = Color(1, 0.8, 0.10980392, 1)
+energy = 4.0
+texture = SubResource("GradientTexture2D_u5fno")
+
+[node name="PointLight2D" type="PointLight2D" parent="Visual"]
+visible = false
+scale = Vector2(7.0000005, 7.0000005)
+energy = 2.0
+texture = SubResource("GradientTexture2D_5u1vi")
+
+[node name="lblKey" type="Label" parent="."]
+visible = false
+texture_filter = 1
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 36.0
+offset_bottom = 35.0
+theme_override_colors/font_color = Color(0.5696832, 0.5598923, 0.66268355, 1)
+theme_override_colors/font_outline_color = Color(0.07055304, 0.06527252, 0.11786618, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_o2fbt")
+theme_override_font_sizes/font_size = 32
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

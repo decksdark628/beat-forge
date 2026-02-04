@@ -1,16 +1,14 @@
 extends Node2D
 
-const UP_POSITION = Vector2(-256,-192)
-const DOWN_POSITION = Vector2(-256,-32)
+@onready var game: Node2D = $".."
 
-func _ready() -> void:
-	position = UP_POSITION
+signal key_pressed
 
-func _process(delta: float) -> void:
-	pass
-
-func _input(event: InputEvent):
-	if(event.is_action_pressed("ui_accept")):
-		position = DOWN_POSITION
-		await get_tree().create_timer(0.25).timeout
-		position = UP_POSITION
+#func _input(event: InputEvent):
+	#if(!game.input_locked):
+		#if(event.is_action_pressed("rhythm_game_key_1")):
+			#key_pressed.emit(1)
+		#if(event.is_action_pressed("rhythm_game_key_2")):
+			#key_pressed.emit(2)
+		#if(event.is_action_pressed("rhythm_game_key_3")):
+			#key_pressed.emit(3)
