@@ -1,10 +1,144 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpenp487bl1jx"]
+[gd_scene load_steps=9 format=3 uid="uid://dds3a8wrx1b20"]
 
+[ext_resource type="Script" uid="uid://cgb0ga07ru8qw" path="res://visual_target.gd" id="1_4nu8x"]
+[ext_resource type="AudioStream" uid="uid://dtguw8le0txdc" path="res://sfx/pipe_drop.wav" id="1_6p1vl"]
 [ext_resource type="Texture2D" uid="uid://byhfy0b3o56fj" path="res://sprites/metall_ball.png" id="2_y8hof"]
 
+[sub_resource type="Animation" id="Animation_1gou3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-700, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MissSFX:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_c7p1g"]
+resource_name = "go"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-700, 0), Vector2(410, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_miss_anim"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_akosd"]
+resource_name = "miss_down"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(410, 0), Vector2(700, 100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MissSFX:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_i28h8"]
+resource_name = "miss_up"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(410, 0), Vector2(700, -100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MissSFX:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i28h8"]
+_data = {
+&"RESET": SubResource("Animation_1gou3"),
+&"go": SubResource("Animation_c7p1g"),
+&"miss_down": SubResource("Animation_akosd"),
+&"miss_up": SubResource("Animation_i28h8")
+}
+
 [node name="VisualTarget" type="Node2D"]
+script = ExtResource("1_4nu8x")
+
+[node name="MissSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_6p1vl")
+volume_db = -30.0
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_i28h8")
+}
 
 [node name="Visual" type="Node2D" parent="."]
+position = Vector2(-700, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Visual"]
 texture_filter = 1
