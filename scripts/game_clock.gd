@@ -3,7 +3,7 @@ extends Node
 const SUBDIVISIONS:int = 4
 
 @onready var timer: Timer = $Timer
-var tick_count:int = 0
+var tick_count:int = -8
 var beat_length:float
 
 signal tick
