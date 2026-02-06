@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsqcbn04q2ild"]
+
+[ext_resource type="Texture2D" uid="uid://byhfy0b3o56fj" path="res://sprites/metall_ball.png" id="1_dfr7x"]
+
+[node name="EmptyTarget" type="Node2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_dfr7x")

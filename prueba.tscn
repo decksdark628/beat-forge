@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4bnytv3nf6jj"]
+
+[ext_resource type="Script" uid="uid://dos3qhffr4v0a" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="1_71jk5"]
+[ext_resource type="Script" uid="uid://bbxoyohwn50o" path="res://prueba.gd" id="1_rcdd3"]
+[ext_resource type="AudioStream" uid="uid://4tk8ix8udiql" path="res://music/145_bpm_bg_track_00.wav" id="3_i5a71"]
+[ext_resource type="PackedScene" uid="uid://dsqcbn04q2ild" path="res://empty_target.tscn" id="4_i5a71"]
+
+[node name="Prueba" type="Node2D"]
+script = ExtResource("1_rcdd3")
+et = ExtResource("4_i5a71")
+
+[node name="RhythmNotifier" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player")]
+script = ExtResource("1_71jk5")
+bpm = 145.0
+beat_length = 0.41379310344827586
+audio_stream_player = NodePath("../AudioStreamPlayer")
+metadata/_custom_type_script = "uid://dos3qhffr4v0a"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_i5a71")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="EmptyTarget" parent="." instance=ExtResource("4_i5a71")]
+visible = false
+position = Vector2(-600, 0)
