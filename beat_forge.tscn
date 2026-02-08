@@ -1,17 +1,22 @@
-[gd_scene load_steps=27 format=3 uid="uid://mdyxw4i53ahq"]
+[gd_scene load_steps=34 format=3 uid="uid://mdyxw4i53ahq"]
 
-[ext_resource type="Script" uid="uid://do6tey7x44gjf" path="res://beat_forge.gd" id="1_xwgc8"]
+[ext_resource type="Script" uid="uid://do6tey7x44gjf" path="res://scripts/beat_forge.gd" id="1_xwgc8"]
 [ext_resource type="Texture2D" uid="uid://cbiee2hoy3io" path="res://sprites/forge_bg.png" id="2_6d80v"]
+[ext_resource type="PackedScene" uid="uid://dds3a8wrx1b20" path="res://visual_target.tscn" id="2_c7p1g"]
 [ext_resource type="Script" uid="uid://vibvs5youif5" path="res://scripts/song_importer.gd" id="2_ggl6f"]
 [ext_resource type="Script" uid="uid://dos3qhffr4v0a" path="res://addons/rhythm_notifier/rhythm_notifier.gd" id="3_1gou3"]
 [ext_resource type="Script" uid="uid://wncyyxgvmv1i" path="res://scripts/hammer.gd" id="3_8vckl"]
 [ext_resource type="Texture2D" uid="uid://b1f7guysyc6p4" path="res://sprites/hammer.png" id="4_ggl6f"]
+[ext_resource type="AudioStream" uid="uid://b6whstt1wqojr" path="res://music/song_01-135bpm.wav" id="4_xwgc8"]
 [ext_resource type="Texture2D" uid="uid://dssoqi6t56cvx" path="res://sprites/hammer_normal_map.png" id="5_xwgc8"]
 [ext_resource type="AudioStream" uid="uid://dlvv5t4xqj76o" path="res://sfx/hit.wav" id="6_8vckl"]
 [ext_resource type="Texture2D" uid="uid://ct1utql1tedjo" path="res://sprites/Anvil.png" id="6_c7p1g"]
-[ext_resource type="Script" uid="uid://47wkj4eyb207" path="res://anvil.gd" id="9_i28h8"]
-[ext_resource type="AudioStream" uid="uid://dlnftmp6ib3ce" path="res://music/song_00.wav" id="10_8vckl"]
+[ext_resource type="AudioStream" uid="uid://dtguw8le0txdc" path="res://sfx/pipe_drop.wav" id="6_i28h8"]
+[ext_resource type="Script" uid="uid://deb8gxybnflo1" path="res://scripts/sfx_player.gd" id="7_lfxy0"]
+[ext_resource type="Script" uid="uid://47wkj4eyb207" path="res://scripts/anvil.gd" id="9_i28h8"]
 [ext_resource type="Texture2D" uid="uid://ba632fnro7j6f" path="res://sprites/explosion.png" id="14_1gou3"]
+[ext_resource type="Script" uid="uid://cctycnnnh28en" path="res://scripts/score_bar.gd" id="14_i28h8"]
+[ext_resource type="FontFile" uid="uid://fcn6tv4ivlog" path="res://fonts/Minecraft.ttf" id="16_akosd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i28h8"]
 atlas = ExtResource("14_1gou3")
@@ -211,11 +216,25 @@ tracks/2/path = NodePath("..")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(3),
+"times": PackedFloat32Array(1.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"start_game"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_unlock_input"
 }]
 }
 
@@ -232,8 +251,28 @@ diffuse_texture = ExtResource("4_ggl6f")
 normal_texture = ExtResource("5_xwgc8")
 texture_filter = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c7p1g"]
+bg_color = Color(0.28485027, 0.28485027, 0.2848502, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1gou3"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
 [node name="BeatForge" type="Node2D"]
 script = ExtResource("1_xwgc8")
+visual_target = ExtResource("2_c7p1g")
 
 [node name="RhythmNotifier" type="Node" parent="." node_paths=PackedStringArray("audio_stream_player")]
 script = ExtResource("3_1gou3")
@@ -244,8 +283,13 @@ metadata/_custom_type_script = "uid://dos3qhffr4v0a"
 script = ExtResource("2_ggl6f")
 
 [node name="SongPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_8vckl")
+stream = ExtResource("4_xwgc8")
 bus = &"Music"
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_i28h8")
+volume_db = -10.0
+script = ExtResource("7_lfxy0")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -254,8 +298,11 @@ texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("2_6d80v")
 
+[node name="TargetSpawner" type="Node2D" parent="."]
+position = Vector2(368, 0)
+
 [node name="Anvil" type="Node2D" parent="."]
-position = Vector2(405, 110)
+position = Vector2(390, 110)
 script = ExtResource("9_i28h8")
 
 [node name="Sprite2D" type="Sprite2D" parent="Anvil"]
@@ -272,7 +319,7 @@ frame = 6
 frame_progress = 1.0
 
 [node name="Hammer" type="Node2D" parent="."]
-position = Vector2(490, -60)
+position = Vector2(475, -60)
 script = ExtResource("3_8vckl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hammer"]
@@ -283,6 +330,7 @@ autoplay = "start_positioning"
 
 [node name="HammerSound" type="AudioStreamPlayer" parent="Hammer"]
 stream = ExtResource("6_8vckl")
+volume_db = -2.0
 
 [node name="Visuals" type="Node2D" parent="Hammer"]
 position = Vector2(75, 0)
@@ -295,4 +343,112 @@ scale = Vector2(5, 5)
 texture = SubResource("CanvasTexture_2e507")
 offset = Vector2(-22.5, -1.5)
 
+[node name="ScoreTracker" type="PanelContainer" parent="."]
+offset_left = -275.0
+offset_top = -320.0
+offset_right = 275.0
+offset_bottom = -270.0
+pivot_offset = Vector2(275, 25)
+theme_override_styles/panel = SubResource("StyleBoxFlat_c7p1g")
+script = ExtResource("14_i28h8")
+
+[node name="ColorPanel" type="Panel" parent="ScoreTracker"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1gou3")
+
+[node name="MarginContainer" type="MarginContainer" parent="ScoreTracker"]
+layout_mode = 2
+
+[node name="ScoreText" type="Label" parent="ScoreTracker/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "0/0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="GameOverScreen" type="Node2D" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen"]
+offset_left = -605.0
+offset_top = -341.0
+offset_right = 605.0
+offset_bottom = 336.0
+color = Color(0, 0, 0, 0.22745098)
+
+[node name="GameOverLabel" type="Label" parent="GameOverScreen"]
+offset_left = -192.0
+offset_top = -229.0
+offset_right = 196.0
+offset_bottom = -165.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("16_akosd")
+theme_override_font_sizes/font_size = 64
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YourScore" type="Label" parent="GameOverScreen"]
+offset_left = -184.0
+offset_top = -132.0
+offset_right = 204.0
+offset_bottom = -68.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("16_akosd")
+theme_override_font_sizes/font_size = 32
+text = "YOUR SCORE:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="GameOverScreen"]
+offset_left = -191.0
+offset_top = -71.0
+offset_right = 197.0
+offset_bottom = -7.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("16_akosd")
+theme_override_font_sizes/font_size = 64
+text = "0/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="GameOverScreen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_top = 42.0
+offset_right = 129.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("16_akosd")
+theme_override_font_sizes/font_size = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverScreen/Button"]
+layout_mode = 0
+offset_right = 238.0
+offset_bottom = 52.0
+theme_override_constants/margin_top = 10
+
+[node name="Label" type="Label" parent="GameOverScreen/Button/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("16_akosd")
+theme_override_font_sizes/font_size = 32
+text = "GO BACK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="key_pressed" from="Hammer" to="." method="_on_hammer_key_pressed"]
+[connection signal="pressed" from="GameOverScreen/Button" to="." method="_on_button_pressed"]

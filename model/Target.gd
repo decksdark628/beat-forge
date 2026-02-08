@@ -2,11 +2,11 @@ extends Resource
 class_name Target
 
 var expected_input:int
-var tick:int
+var beat:float
 
-func _init(_expected_input:int, _tick:int ) -> void:
+func _init(_expected_input:int, _beat:float ) -> void:
 	expected_input = _expected_input
-	tick = _tick
+	beat = _beat
 
 func _to_string() -> String:
-	return str(expected_input) + ", " + str(tick)
+	return str(expected_input) + ", " + str(beat)

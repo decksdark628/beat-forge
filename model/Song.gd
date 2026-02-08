@@ -5,8 +5,8 @@ var name:String
 var bpm:int
 var targets:Array = []
 
-func add_target(exp_key:int, tick:int):
-	var nuevo:Target = Target.new(exp_key, tick)
+func add_target(exp_key:int, beat:float):
+	var nuevo:Target = Target.new(exp_key, beat)
 	targets.append(nuevo)
 
 func _to_string() -> String:
